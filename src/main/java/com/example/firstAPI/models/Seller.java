@@ -17,11 +17,12 @@ import java.util.function.Predicate;
 public class Seller implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
     private String email;
 
+    @Column(columnDefinition = "TIMESTAMP")
     private LocalDate birthDate;
 
     private Double baseSalary;
@@ -36,7 +37,7 @@ public class Seller implements Serializable {
 
     }
 
-    public Seller(UUID id, String name, String email, LocalDate birthDate, Double baseSalary, Department department){
+    public Seller(Long id, String name, String email, LocalDate birthDate, Double baseSalary, Department department){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -46,11 +47,11 @@ public class Seller implements Serializable {
 
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

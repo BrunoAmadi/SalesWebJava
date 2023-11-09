@@ -13,25 +13,25 @@ import java.util.UUID;
 public class Department implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
 
     public Department() {
     }
 
 
-    public Department(UUID id, String name) {
+    public Department(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

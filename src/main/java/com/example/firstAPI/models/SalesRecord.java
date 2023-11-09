@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name="SalesRecords")
@@ -14,12 +13,15 @@ public class SalesRecord implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "saleDate",columnDefinition = "TIMESTAMP")
     private LocalDateTime date;
 
     private Double amount;
 
+    @Enumerated(EnumType.STRING)
     private SaleStatus status;
 
     @ManyToOne
@@ -31,7 +33,7 @@ public class SalesRecord implements Serializable {
 
     }
 
-    public SalesRecord(UUID id, LocalDateTime date, Double amount, SaleStatus status, Seller seller) {
+    public SalesRecord(Long id, LocalDateTime date, Double amount, SaleStatus status, Seller seller) {
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -39,11 +41,11 @@ public class SalesRecord implements Serializable {
         this.seller = seller;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
