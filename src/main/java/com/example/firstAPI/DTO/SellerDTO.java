@@ -1,60 +1,27 @@
-package com.example.firstAPI.models;
+package com.example.firstAPI.DTO;
 
+import com.example.firstAPI.models.Department;
 
-import jakarta.persistence.*;
-
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.function.Predicate;
 
+public class SellerDTO {
 
-@Entity
-@Table(name ="Sellers")
-public class Seller implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String name;
     private String email;
 
-    @Column(columnDefinition = "TIMESTAMP")
     private LocalDate birthDate;
 
     private Double baseSalary;
-
-
-    @ManyToOne
-    @JoinColumn(name = "department_id")
     private Department department;
 
+    public SellerDTO(){}
 
-
-
-    public Seller(){
-
-    }
-
-    public Seller(Long id, String name, String email, LocalDate birthDate, Double baseSalary, Department department){
-        this.id = id;
+    public SellerDTO(String name, String email, LocalDate birthDate, Double baseSalary, Department department) {
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
         this.baseSalary = baseSalary;
         this.department = department;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -81,6 +48,7 @@ public class Seller implements Serializable {
         this.birthDate = birthDate;
     }
 
+
     public Double getBaseSalary() {
         return baseSalary;
     }
@@ -96,12 +64,6 @@ public class Seller implements Serializable {
     public void setDepartment(Department department) {
         this.department = department;
     }
-
-
-
-
-
-
 
 
 }

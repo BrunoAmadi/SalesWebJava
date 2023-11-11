@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 public class SalesRecordService {
 
 
-    @Autowired
-    private SalesRecordRepository salesRecordRepository;
+
+    private final SalesRecordRepository salesRecordRepository;
+
+    public SalesRecordService(SalesRecordRepository salesRecordRepository){
+     this.salesRecordRepository = salesRecordRepository;
+ }
 
 
 }
