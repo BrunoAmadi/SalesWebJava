@@ -5,11 +5,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.function.Predicate;
+
 
 
 @Entity
@@ -32,7 +30,8 @@ public class Seller implements Serializable {
     @JoinColumn(name = "department_id")
     private Department department;
 
-
+    @OneToMany
+    private List<SalesRecord> salesRecords = new ArrayList<>();
 
 
     public Seller(){
@@ -99,8 +98,20 @@ public class Seller implements Serializable {
 
 
 
+    public void addSales(SalesRecord sr){
+        salesRecords.add(sr);
+    }
 
+    public void removeSales(SalesRecord sr){
+        salesRecords.remove(sr);
+    }
 
+    public double totalSales(LocalDate initial, LocalDate end){
+        double sum = salesRecords.stream().filter(x -> !x.getDate().isBefore(initial.atStartOfDay()) && !x.getDate().isAfter(end.atStartOfDay()))
+                .mapToDouble(SalesRecord::getAmount).sum();
+
+        return sum;
+    }
 
 
 

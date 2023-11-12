@@ -11,4 +11,10 @@ public class CustomExceptionHandler {
     public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e){
        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
+
+    @ExceptionHandler(DbIntegrityException.class)
+    public  ResponseEntity<String> handleDbIntegrityException(DbIntegrityException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 }

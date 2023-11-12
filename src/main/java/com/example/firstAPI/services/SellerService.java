@@ -1,12 +1,14 @@
 package com.example.firstAPI.services;
-
 import com.example.firstAPI.DTO.SellerDTO;
+import com.example.firstAPI.models.Department;
 import com.example.firstAPI.models.Seller;
 import com.example.firstAPI.repositories.SellerRepository;
+import com.example.firstAPI.services.exceptions.DbIntegrityException;
 import com.example.firstAPI.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SellerService {
@@ -20,18 +22,20 @@ public class SellerService {
     }
 
 
-    public List<Seller> findAll() {
-
-        return sellerRepository.findAll();
+    public List<SellerDTO> findAll() {
+        List<Seller> listSeller = sellerRepository.findAll();
+        List<SellerDTO> listSellerDTO = listSeller.stream().map(this::transferDTO).toList();
+        return listSellerDTO;
     }
 
 
-    public Seller findById(long id) throws ResourceNotFoundException {
+    public SellerDTO findById(long id) throws ResourceNotFoundException {
 
         Optional<Seller> optinalSeller = sellerRepository.findById(id);
 
         if (optinalSeller.isPresent()) {
-            return optinalSeller.get();
+
+            return transferDTO(optinalSeller.get());
 
         } else {
             throw new ResourceNotFoundException("Id não encontrado " + id);
@@ -41,17 +45,19 @@ public class SellerService {
     }
 
 
-    public Seller insert(SellerDTO sellerDTO) {
-
-        //convertendo SellerDTO que chegou como parametro para Seller e inserir no BD
+    public SellerDTO insert(SellerDTO sellerDTO) {
 
         Seller seller = new Seller();
         seller.setName(sellerDTO.getName());
         seller.setEmail(sellerDTO.getEmail());
-        seller.setBirthDate(sellerDTO.getBirthDate());
         seller.setBaseSalary(sellerDTO.getBaseSalary());
-        seller.setDepartment(sellerDTO.getDepartment());
-        return sellerRepository.save(seller);
+        seller.setBirthDate(sellerDTO.getBirthDate());
+
+        Department department = new Department();
+        department.setId(sellerDTO.getDepartment().getId());
+        seller.setDepartment(department);
+
+        return transferDTO(sellerRepository.save(seller));
 
     }
 
@@ -75,7 +81,21 @@ public class SellerService {
 
     }
 
-    // função para transformar seller em SellerDTO e enviar para o controller
+
+    public void deleteSeller(long id) throws DbIntegrityException {
+try{
+
+    if(sellerRepository.existsById(id)) {
+        sellerRepository.deleteById(id);
+    }
+
+} catch(RuntimeException e){
+    throw new DbIntegrityException("Não é possivel deletar um vendedor que possui muitas vendas alocadas");
+}
+
+
+    }
+
     public SellerDTO transferDTO(Seller obj) {
         SellerDTO sellerDTO = new SellerDTO();
         sellerDTO.setName(obj.getName());
@@ -87,6 +107,10 @@ public class SellerService {
 
 
     }
+
+
 }
+
+
 
 
