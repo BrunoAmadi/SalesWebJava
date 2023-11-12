@@ -27,15 +27,10 @@ public class SellerResource {
 
     @GetMapping(value = "/{id}")
     public Seller findById(@PathVariable  long id){
-
-        Seller seller = sellerService.findById(id);
-
-        if(seller == null){
-            throw new ResourceNotFoundException("Id not found" + id);
-        }
-        return seller;
+        return sellerService.findById(id);
 
     }
+
 
 @PostMapping(value = "/insert")
     public Seller insertSeller (@RequestBody Seller seller){
@@ -50,10 +45,24 @@ public class SellerResource {
         department.setId(seller.getDepartment().getId());
         sellerDTO.setDepartment(department);
 
-       return sellerService.insertSeller(sellerDTO);
+       return sellerService.insert(sellerDTO);
 
 
 }
+
+@PutMapping(value = "/put/{id}")
+    public SellerDTO putSeller(@RequestBody SellerDTO obj , @PathVariable long id){
+
+            SellerDTO sellerDTO = new SellerDTO();
+            sellerDTO.setName(obj.getName());
+            sellerDTO.setEmail(obj.getEmail());
+            sellerDTO.setBaseSalary(obj.getBaseSalary());
+            sellerDTO.setBirthDate(obj.getBirthDate());
+            sellerDTO.setDepartment(obj.getDepartment());
+            return   sellerService.putSeller(sellerDTO,id);
+            
+}
+
 
 
 
