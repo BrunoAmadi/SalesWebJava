@@ -74,7 +74,11 @@ public class SalesRecord implements Serializable {
     }
 
 
+    public Seller getSeller() {
+        return seller;
+    }
 
-
-
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.firstAPI.DTO;
 
 import com.example.firstAPI.models.Department;
+import com.example.firstAPI.models.Seller;
 
 import java.time.LocalDate;
 
@@ -16,12 +17,14 @@ public class SellerDTO {
 
     public SellerDTO(){}
 
-    public SellerDTO(String name, String email, LocalDate birthDate, Double baseSalary, Department department) {
-        this.name = name;
-        this.email = email;
-        this.birthDate = birthDate;
-        this.baseSalary = baseSalary;
-        this.department = department;
+    public SellerDTO(Seller entity) {
+
+        this.name = entity.getName();
+        this.email = entity.getEmail();
+        this.birthDate = entity.getBirthDate();
+        this.baseSalary = entity.getBaseSalary();
+        this.department = entity.getDepartment();
+
     }
 
     public String getName() {

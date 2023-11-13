@@ -20,15 +20,11 @@ public DepartmentService(DepartmentRepository departmentRepository){
 
     public List<DepartmentDTO> findAll(){
         List<Department> departments = departmentRepository.findAll();
-        List<DepartmentDTO> departmentDTOS = departments.stream().map(this::transformDepartmentDTO).toList();
+        List<DepartmentDTO> departmentDTOS = departments.stream().map(x -> new DepartmentDTO(x.getName())).toList();
      return departmentDTOS;
     }
 
 
 
-    public DepartmentDTO transformDepartmentDTO(Department department){
-        DepartmentDTO departmentDTO = new DepartmentDTO();
-        departmentDTO.setName(department.getName());
-        return departmentDTO;
-    }
+
 }

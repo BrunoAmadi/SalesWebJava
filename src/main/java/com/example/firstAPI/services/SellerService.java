@@ -8,7 +8,7 @@ import com.example.firstAPI.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class SellerService {
@@ -24,7 +24,7 @@ public class SellerService {
 
     public List<SellerDTO> findAll() {
         List<Seller> listSeller = sellerRepository.findAll();
-        List<SellerDTO> listSellerDTO = listSeller.stream().map(this::transferDTO).toList();
+        List<SellerDTO> listSellerDTO = listSeller.stream().map(x -> new SellerDTO(x)).toList();
         return listSellerDTO;
     }
 
@@ -35,7 +35,7 @@ public class SellerService {
 
         if (optinalSeller.isPresent()) {
 
-            return transferDTO(optinalSeller.get());
+            return new SellerDTO(optinalSeller.get());
 
         } else {
             throw new ResourceNotFoundException("Id não encontrado " + id);
@@ -57,7 +57,7 @@ public class SellerService {
         department.setId(sellerDTO.getDepartment().getId());
         seller.setDepartment(department);
 
-        return transferDTO(sellerRepository.save(seller));
+        return new SellerDTO(sellerRepository.save(seller));
 
     }
 
@@ -72,7 +72,7 @@ public class SellerService {
             seller.setBirthDate(sellerDTO.getBirthDate());
             seller.setBaseSalary(sellerDTO.getBaseSalary());
             seller.setDepartment(sellerDTO.getDepartment());
-            return transferDTO(sellerRepository.save(seller));
+            return new SellerDTO(seller);
 
         } else {
             throw new ResourceNotFoundException("Usuario não encontrado");
@@ -95,19 +95,6 @@ try{
 
 
     }
-
-    public SellerDTO transferDTO(Seller obj) {
-        SellerDTO sellerDTO = new SellerDTO();
-        sellerDTO.setName(obj.getName());
-        sellerDTO.setEmail(obj.getEmail());
-        sellerDTO.setBirthDate(obj.getBirthDate());
-        sellerDTO.setBaseSalary(obj.getBaseSalary());
-        sellerDTO.setDepartment(obj.getDepartment());
-        return sellerDTO;
-
-
-    }
-
 
 }
 

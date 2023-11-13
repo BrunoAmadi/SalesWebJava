@@ -18,6 +18,7 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
+
     @GetMapping
     public List<DepartmentDTO> findAll(){
         return departmentService.findAll();
