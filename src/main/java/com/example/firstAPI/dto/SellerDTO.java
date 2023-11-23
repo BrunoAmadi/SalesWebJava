@@ -1,4 +1,4 @@
-package com.example.firstAPI.DTO;
+package com.example.firstAPI.dto;
 
 import com.example.firstAPI.models.Department;
 import com.example.firstAPI.models.Seller;

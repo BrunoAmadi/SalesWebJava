@@ -1,4 +1,4 @@
-package com.example.firstAPI.DTO;
+package com.example.firstAPI.dto;
 
 import com.example.firstAPI.models.Enums.SaleStatus;
 import com.example.firstAPI.models.SalesRecord;

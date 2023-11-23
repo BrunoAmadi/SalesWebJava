@@ -1,5 +1,5 @@
 package com.example.firstAPI.services;
-import com.example.firstAPI.DTO.SellerDTO;
+import com.example.firstAPI.dto.SellerDTO;
 import com.example.firstAPI.models.Department;
 import com.example.firstAPI.models.Seller;
 import com.example.firstAPI.repositories.SellerRepository;
@@ -29,18 +29,17 @@ public class SellerService {
     }
 
 
+
     public SellerDTO findById(long id) throws ResourceNotFoundException {
 
         Optional<Seller> optinalSeller = sellerRepository.findById(id);
 
-        if (optinalSeller.isPresent()) {
-
-            return new SellerDTO(optinalSeller.get());
-
-        } else {
+        if (!optinalSeller.isPresent()) {
             throw new ResourceNotFoundException("Id não encontrado " + id);
 
         }
+
+            return new SellerDTO(optinalSeller.get());
 
     }
 
@@ -64,9 +63,11 @@ public class SellerService {
 
     public SellerDTO putSeller(SellerDTO sellerDTO, long id)  throws ResourceNotFoundException {
 
+        if (!sellerRepository.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("Usuario não encontrado");
+        }
 
-        if (sellerRepository.findById(id).isPresent()) {
-           Seller seller = sellerRepository.findById(id).get();
+            Seller seller = sellerRepository.findById(id).get();
             seller.setName(sellerDTO.getName());
             seller.setEmail(sellerDTO.getEmail());
             seller.setBirthDate(sellerDTO.getBirthDate());
@@ -74,24 +75,18 @@ public class SellerService {
             seller.setDepartment(sellerDTO.getDepartment());
             return new SellerDTO(seller);
 
-        } else {
-            throw new ResourceNotFoundException("Usuario não encontrado");
+
+    }
+    public void deleteSeller(long id) throws DbIntegrityException {
+    try{
+
+        if(sellerRepository.existsById(id)) {
+        sellerRepository.deleteById(id);
         }
 
-
-    }
-
-
-    public void deleteSeller(long id) throws DbIntegrityException {
-try{
-
-    if(sellerRepository.existsById(id)) {
-        sellerRepository.deleteById(id);
-    }
-
-} catch(RuntimeException e){
+    } catch(RuntimeException e){
     throw new DbIntegrityException("Não é possivel deletar um vendedor que possui muitas vendas alocadas");
-}
+    }
 
 
     }

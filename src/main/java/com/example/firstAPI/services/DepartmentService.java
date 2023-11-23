@@ -1,12 +1,11 @@
 package com.example.firstAPI.services;
 
-import com.example.firstAPI.DTO.DepartmentDTO;
+import com.example.firstAPI.dto.DepartmentDTO;
 import com.example.firstAPI.models.Department;
 import com.example.firstAPI.repositories.DepartmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DepartmentService {

@@ -1,14 +1,11 @@
 package com.example.firstAPI.services;
 
-import com.example.firstAPI.DTO.SalesRecordDTO;
-import com.example.firstAPI.models.SalesRecord;
+import com.example.firstAPI.dto.SalesRecordDTO;
 import com.example.firstAPI.repositories.SalesRecordRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SalesRecordService {
@@ -18,8 +15,6 @@ public class SalesRecordService {
     public SalesRecordService(SalesRecordRepository salesRecordRepository){
      this.salesRecordRepository = salesRecordRepository;
  }
-
-
 
  public List<SalesRecordDTO> findAll(){
         return salesRecordRepository.findAll().stream().map(x -> new SalesRecordDTO(x)).toList();
