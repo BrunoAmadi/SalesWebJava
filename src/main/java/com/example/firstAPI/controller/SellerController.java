@@ -35,7 +35,7 @@ public class SellerController {
     }
 
 
-    @Operation(summary = "insere", description = "insere um seller passando na requisição um Seller", tags = "Sellers")
+    @Operation(summary = "Inserir um seller", description = "inserir um seller passando na requisição um Seller", tags = "Sellers")
     @PostMapping(value = "/insert")
     public SellerDTO insertSeller(@RequestBody SellerDTO sellerDTO) {
         return sellerService.insert(sellerDTO);
